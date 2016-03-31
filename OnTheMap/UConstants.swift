@@ -91,6 +91,18 @@ extension UClient {
         static let User = "user"
             static let FirstName = "first_name"
             static let LastName = "last_name"
+        
+        //MARK: Parse - User Data Results
+        static let createdAt = "createdAt"
+        static let firstName = "firstName"
+        static let lastName = "lastName"
+        static let latitude = "latitude"
+        static let longitude = "longitude"
+        static let mapString = "mapString"
+        static let mediaURL = "mediaURL"
+        static let objectId = "objectId"
+        static let uniqueKey = "uniqueKey" //id
+        static let updatedAt = "updatedAt"
     }
     
 }

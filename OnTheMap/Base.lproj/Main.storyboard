@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Map-->
@@ -92,7 +93,7 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6Lw-lf-XvJ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UdacityUserCell" id="6Lw-lf-XvJ">
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Lw-lf-XvJ" id="AvR-ua-Eh2">
@@ -122,10 +123,10 @@
             </objects>
             <point key="canvasLocation" x="816" y="392"/>
         </scene>
-        <!--LinkWebViewViewController-->
+        <!--UserURLViewController-->
         <scene sceneID="832-dc-TZn">
             <objects>
-                <viewController title="LinkWebViewViewController" id="ptX-YZ-LRT" sceneMemberID="viewController">
+                <viewController title="UserURLViewController" id="ptX-YZ-LRT" customClass="UserURLViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HrV-nn-iB4"/>
                         <viewControllerLayoutGuide type="bottom" id="9mb-Eb-HFV"/>
@@ -307,8 +308,11 @@
                                 <segue destination="ARj-Z3-dkG" kind="show" id="tpZ-sa-Hj2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="leftBarButtonItem" image="pin" id="Ua1-RJ-pBB"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="cQz-GV-AnE"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="t9g-6M-WWT"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="cQz-GV-AnE"/>
+                            <barButtonItem image="pin" id="Ua1-RJ-pBB"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">

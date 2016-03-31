@@ -119,39 +119,28 @@ class LoginViewController: UIViewController {
                     print("Could not parse the data as JSON: '\(data)'")
                     return
                 }
+             
+                /* Use the data! */
+                //TODO: Store Key?
+                
+                guard let account = parsedResult["account"] as? NSDictionary, let userKey = account["key"] as? String else {
+                    print("Error getting userKey")
+                    return
+                }
+                UClient.sharedInstance.userKey = userKey
+                print(UClient.sharedInstance.userKey)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.performSegueWithIdentifier("SegueLoadMapView", sender: self)
+                }
             }
-            
-            /* Use the data! */
-            //TODO: Store Key?
-            
+
         }
         task.resume()
         print("FINISHED U-LOGIN")
         
-  //      getStudentLocations()
     }
     
-    private func getStudentLocations() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100")!)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        let session = NSURLSession.sharedSession()
-        
-        print("REQUEST on PARSE: ", request)
-        
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error...
-                return
-            }
-            print("DATA from PARSE: ", NSString(data: data!, encoding: NSUTF8StringEncoding))
-            print("RESPONSE from PARSE: ", response)
-        }
-        task.resume()
-        
-    performSegueWithIdentifier("SegueLoadMapView", sender: self)
-
     
-    }
     
     private func logout() {
     

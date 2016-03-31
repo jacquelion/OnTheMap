@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D2C5B691CADB8B00047AB7B /* UserURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2C5B681CADB8B00047AB7B /* UserURLViewController.swift */; };
+		6D2C5B6B1CADC4DF0047AB7B /* UserLocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2C5B6A1CADC4DF0047AB7B /* UserLocationData.swift */; };
+		6D2C5B6D1CADE4F40047AB7B /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2C5B6C1CADE4F40047AB7B /* ParseConstants.swift */; };
 		6D8064141CA702DC00506C1B /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8064131CA702DC00506C1B /* GCDBlackBox.swift */; };
 		6D80641A1CA71A4F00506C1B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8064191CA71A4F00506C1B /* LoginViewController.swift */; };
 		6D80641C1CA71EA400506C1B /* UAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80641B1CA71EA400506C1B /* UAuthViewController.swift */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D2C5B681CADB8B00047AB7B /* UserURLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserURLViewController.swift; sourceTree = "<group>"; };
+		6D2C5B6A1CADC4DF0047AB7B /* UserLocationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocationData.swift; sourceTree = "<group>"; };
+		6D2C5B6C1CADE4F40047AB7B /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		6D8064131CA702DC00506C1B /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		6D8064191CA71A4F00506C1B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6D80641B1CA71EA400506C1B /* UAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAuthViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +62,8 @@
 		6D2C5B671CAD913E0047AB7B /* Parse */ = {
 			isa = PBXGroup;
 			children = (
+				6D2C5B6A1CADC4DF0047AB7B /* UserLocationData.swift */,
+				6D2C5B6C1CADE4F40047AB7B /* ParseConstants.swift */,
 			);
 			name = Parse;
 			sourceTree = "<group>";
@@ -103,6 +111,7 @@
 				6D8064191CA71A4F00506C1B /* LoginViewController.swift */,
 				6DF420E21CA0CF350087C093 /* MapViewController.swift */,
 				6DF420E41CA0CF350087C093 /* ListViewController.swift */,
+				6D2C5B681CADB8B00047AB7B /* UserURLViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -229,6 +238,7 @@
 				6D80641C1CA71EA400506C1B /* UAuthViewController.swift in Sources */,
 				6D8064141CA702DC00506C1B /* GCDBlackBox.swift in Sources */,
 				6DF420E51CA0CF350087C093 /* ListViewController.swift in Sources */,
+				6D2C5B691CADB8B00047AB7B /* UserURLViewController.swift in Sources */,
 				6DF420E11CA0CF350087C093 /* AppDelegate.swift in Sources */,
 				6D80641A1CA71A4F00506C1B /* LoginViewController.swift in Sources */,
 				6D8064221CA71EC800506C1B /* UConfig.swift in Sources */,
@@ -237,6 +247,8 @@
 				6D8064261CA7221000506C1B /* UClient.swift in Sources */,
 				6D8064241CA71EEA00506C1B /* UUser.swift in Sources */,
 				6DF420E31CA0CF350087C093 /* MapViewController.swift in Sources */,
+				6D2C5B6B1CADC4DF0047AB7B /* UserLocationData.swift in Sources */,
+				6D2C5B6D1CADE4F40047AB7B /* ParseConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,43 +1,54 @@
-////
-////  UUser.swift
-////  OnTheMap
-////
-////  Created by Jacqueline Sloves on 3/26/16.
-////  Copyright © 2016 Jacqueline Sloves. All rights reserved.
-////
 //
-////MARK: - UdacityUser
+//  UUser.swift
+//  OnTheMap
 //
-//struct UUser {
+//  Created by Jacqueline Sloves on 3/26/16.
+//  Copyright © 2016 Jacqueline Sloves. All rights reserved.
 //
-//    //MARK: Properties
-//    let firstName: String
-//    let lastName: String
-//    let id: Int
-//    
-//    let lat: Double
-//    let long: Double
-//    
-//    let mediaURL: String
-//    
-//    //let coordinate = CLLocationCoordinate2D(latititude: lat, longitude: long)
-//    
-//    //MARK: Initializers
-//    
-//    //Construct a location from a Dictionary
-//    init(dictionary: [String: AnyObject]) {
-//        
-//    }
-//    
-//    static func usersFromResults(results: [[String:AnyObject]]) -> [UUser] {
-//        var users = [UUser]()
-//        
-//        //iterate through array of users, each user is a dictionary
-//        for result in results {
-//            users.append(UUser(dictionary: result))
-//        }
-//        
-//        return users
-//    }
-//
-//}
+
+//MARK: - UdacityUser
+
+struct UUser {
+
+    //MARK: Properties
+    let createdAt: String
+    let firstName: String
+    let lastName: String
+    let latitude: Double
+    let longitude: Double
+    let mapString: String
+    let mediaURL: String
+    let objectId: String
+    let uniqueKey: Int //id
+    let updatedAt: String
+    
+//    let coordinate = CLLocationCoordinate2D(latititude: latitude, longitude: longitude)
+    
+    //MARK: Initializers
+    
+    //Construct a location from a Dictionary
+    init(dictionary: [String: AnyObject]) {
+        createdAt = dictionary["createdAt"] as! String
+        firstName = dictionary["firstName"] as! String
+        lastName = dictionary["lastName"] as! String
+        latitude = dictionary["latitude"] as! Double
+        longitude = dictionary["longitude"] as! Double
+        mapString = dictionary["mapString"] as! String
+        mediaURL = dictionary["mediaURL"] as! String
+        objectId = dictionary["objectId"] as! String
+        uniqueKey = dictionary["uniqueKey"] as! Int //id
+        updatedAt = dictionary["updatedAt"] as! String
+    }
+    
+    static func usersFromResults(results: [[String:AnyObject]]) -> [UUser] {
+        var users = [UUser]()
+        
+        //iterate through array of users, each user is a dictionary
+        for result in results {
+            users.append(UUser(dictionary: result))
+        }
+        
+        return users
+    }
+
+}

@@ -8,9 +8,9 @@
 
 import Foundation
 
-//MARK: UClient: NSObject
+//MARK: UClient
 
-class UClient : NSObject {
+class UClient {
     
     //MARK: Properties
     
@@ -24,12 +24,12 @@ class UClient : NSObject {
 //    var requestToken: String? = nil
 //    var sessionID: String? = nil
 //    var userID: Int? = nil
-    var userKey: String? = nil
+    var userKey: String! = nil
+    var users: [UUser] = []
     
     //MARK: Initializers
     
-    override init() {
-        super.init()
+    private init() {
     }
     
     //TODO: FILL THESE OUT
@@ -164,12 +164,13 @@ class UClient : NSObject {
         return components.URL!
     }
     
-    //MARK: Shared Instance
+    //MARK: Shared Instance - Singleton
     
-    class func sharedInstance() -> UClient {
-        struct Singleton {
-            static var sharedInstance = UClient()
-        }
-        return Singleton.sharedInstance
-    }
+    static let sharedInstance = UClient()
+//    class func sharedInstance() -> UClient {
+//        struct Singleton {
+//            static var sharedInstance = UClient()
+//        }
+//        return Singleton.sharedInstance
+//    }
 }

@@ -96,7 +96,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Lw-lf-XvJ" id="AvR-ua-Eh2">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -169,7 +169,6 @@
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="loginButton:" destination="bpC-oL-uLD" eventType="touchUpInside" id="0vB-vc-PiW"/>
-                                    <segue destination="dgw-Zf-KA3" kind="show" id="zJO-vY-AEv"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oog-Lo-aPW">
@@ -202,7 +201,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="81H-0f-IXw">
                                 <rect key="frame" x="178" y="274" width="245" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gY-WD-pXr">
                                 <rect key="frame" x="234" y="543" width="114" height="30"/>
@@ -239,8 +238,10 @@
                     </view>
                     <connections>
                         <outlet property="debugTextLabel" destination="oog-Lo-aPW" id="Pq3-lv-rKU"/>
+                        <outlet property="loginButton" destination="5Jx-BA-V2K" id="Urb-vm-9Qa"/>
                         <outlet property="password" destination="81H-0f-IXw" id="AtO-Md-G8x"/>
                         <outlet property="username" destination="DWv-El-uFO" id="mdp-S2-yBf"/>
+                        <segue destination="dgw-Zf-KA3" kind="showDetail" identifier="SegueLoadMapView" id="qBd-Yz-rDD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zHP-2o-K7x" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -53,6 +53,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D2C5B671CAD913E0047AB7B /* Parse */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Parse;
+			sourceTree = "<group>";
+		};
 		6D8064101CA7029F00506C1B /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +71,7 @@
 		6D8064111CA702A800506C1B /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				6D2C5B671CAD913E0047AB7B /* Parse */,
 				6D8064121CA702B200506C1B /* Udacity */,
 			);
 			name = Clients;

@@ -21,9 +21,10 @@ class UClient : NSObject {
     //var config = UConfig()
     
     //authentication state
-    var requestToken: String? = nil
-    var sessionID: String? = nil
-    var userID: Int? = nil
+//    var requestToken: String? = nil
+//    var sessionID: String? = nil
+//    var userID: Int? = nil
+    var userKey: String? = nil
     
     //MARK: Initializers
     

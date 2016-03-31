@@ -14,13 +14,21 @@ extension UClient {
     struct Constants {
         
         //MARK: API Key
-        static let ApiKey : String = ""
+        static let ParseApiKey : String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        static let ParseApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         
-        //MARK: URLs
+        
+        //MARK: URLs - UDACITY
         static let ApiScheme = "https"
         static let ApiHost = "www.udacity.com"
         static let ApiPath = "api"
         static let AuthorizationURL: String = "https://www.udacity.com/api/session"
+        
+        //MARK: URLs - PARSE
+        static let ParseApiScheme = "https"
+        static let ParseApiHost = "api.parse.com"
+        static let ParseApiPath = "1"
+        static let ParseAuthorizationURL: String = "https://api.parse.com/1/classes/"
         
     
     }
@@ -47,7 +55,7 @@ extension UClient {
     
     //MARK: URL Keys
     struct URLKeys {
-    
+        static let UserID = "id"
     }
     
     //MARK: Parameter Keys
@@ -57,12 +65,17 @@ extension UClient {
     
     //MARK: JSON Body Keys
     struct JSONBodyKeys {
+        static let udacity = "udacity"
+        static let username = "username"
+        static let password = "password"
         
     }
     
     
     //MARK JSON Response Keys
     struct JSONResponseKeys {
+        
+        static let statusCode = "status code"
         
         //MARK: Authorization
         static let Account = "account"

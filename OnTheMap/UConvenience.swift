@@ -17,10 +17,9 @@ extension UClient {
     /*
      Steps for Authentication...
      
-     Step 1: Create a new request token
-     Step 2a: Ask the user for permission via the website
-     Step 3: Create a session ID
-     Bonus Step: Go ahead and get the user id 😄!
+     Step 1: Login To Udacity
+     Step 2: Get User Data
+     Step 3: Get Map Locations
      */
     
     func authenticateWithViewController(hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: String?) -> Void) {
@@ -28,8 +27,30 @@ extension UClient {
         // chain completion handlers for each request so that they run one after the other
         login() { (success, userKey, errorString) in
             if success {
+                //Store key
                 self.userKey = userKey
-                print("SUCCESS")
+                print("SUCCESS logging in, getting userKey: ", userKey)
+                
+                self.getUserInfo(){ (success, errorString) in
+                    
+                    if success {
+                    //Store User Info (i.e. Name)
+                        
+                        self.getMapLocations() {(success, errorString) in
+                            
+                            if success {
+                                //store locations as points on map
+                            }
+                            completionHandlerForAuth(success: success, errorString: errorString)
+                        
+                        }
+                    
+                    } else {
+                        completionHandlerForAuth(success: success, errorString: errorString)
+                    }
+                
+                }
+                
             } else {
                 completionHandlerForAuth(success: success, errorString: errorString)
             }
@@ -38,50 +59,8 @@ extension UClient {
     }
     
         
-//        getRequestToken() { (success, requestToken, errorString) in
-//            
-//            if success {
-//                
-//                // success! we have the requestToken!
-//                self.requestToken = requestToken
-//                
-//                self.loginWithToken(requestToken, hostViewController: hostViewController) { (success, errorString) in
-//                    
-//                    if success {
-//                        self.getSessionID(requestToken) { (success, sessionID, errorString) in
-//                            
-//                            if success {
-//                                
-//                                // success! we have the sessionID!
-//                                self.sessionID = sessionID
-//                                
-//                                self.getUserID() { (success, userID, errorString) in
-//                                    
-//                                    if success {
-//                                        
-//                                        if let userID = userID {
-//                                            
-//                                            // and the userID 😄!
-//                                            self.userID = userID
-//                                        }
-//                                    }
-//                                    
-//                                    completionHandlerForAuth(success: success, errorString: errorString)
-//                                }
-//                            } else {
-//                                completionHandlerForAuth(success: success, errorString: errorString)
-//                            }
-//                        }
-//                    } else {
-//                        completionHandlerForAuth(success: success, errorString: errorString)
-//                    }
-//                }
-//            } else {
-//                completionHandlerForAuth(success: success, errorString: errorString)
-//            }
-//        }
-//    }
-    
+
+
     private func login(completionHandlerForULogin: (success: Bool, userKey: String?, errorString: String?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
@@ -106,7 +85,13 @@ extension UClient {
         }
     }
     
+    private func getUserInfo(completionHandlerForUserInfo: (success: Bool, errorString: String?) -> Void){
     
+    }
+    
+    private func getMapLocations(completionHandlerForMapLocations: (success: Bool, errorString: String?) -> Void){
+    
+    }
     
     
 }

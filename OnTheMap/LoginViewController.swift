@@ -28,7 +28,17 @@ class LoginViewController: UIViewController {
 //            }
 //        }
         
-        login()
+        if (username.text == "" || password.text == "" ) {
+            let alert = UIAlertController(title: "Empty Fields", message: "Please enter both a valid username and password.", preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                //stop login if there are empty fields
+                return
+            }
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true){}
+        } else {
+            login()
+        }
     }
     // @IBOutlet weak var loginButton: BorderedButton!
     
@@ -47,7 +57,6 @@ class LoginViewController: UIViewController {
     }
     
     private func login () {
-        
         
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
         request.HTTPMethod = "POST"
@@ -71,21 +80,38 @@ class LoginViewController: UIViewController {
             print("RESPONSE from U-LOGIN: ", response)
             print("DATA from U-LOGIN: ", NSString(data: newData, encoding: NSUTF8StringEncoding))
                 
-                //TODO: Check for Status Code, and present alert view if not 200
-//                guard let statuscode = newData["status code"] as? Int else {
-//                    print("Error on Status Code.")
-//                    return
-//                }
-//                
-//                if statuscode != 200 {
-//                    let alertView = UIAlertView(title: "Alert", message: "The username and password combination is not registered with Udacity. Please try again.", delegate: self, cancelButtonTitle: "OK")
-//                    alertView.show()
-//                }
+            //TODO: Check for Status Code, and present alert view if not 200
+                guard let statuscode = (response as? NSHTTPURLResponse)?.statusCode else {
+                    print("Error on Status Code.")
+                    return
+                }
+                
+                switch statuscode {
+                    case 200...299:
+                        print("great status.")
+                    case 403:
+                        let alert = UIAlertController(title: "Account not found", message: "Account not found or invalid credentials. Please ensure you have registered with Udacity and entered the correct username/password combination.", preferredStyle: .Alert)
+                        let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }                         }
+                        alert.addAction(action)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.presentViewController(alert, animated: true){}
+                        }
+                    default:
+                        let alert = UIAlertController(title: "Alert", message: "The username and password combination is not registered with Udacity. Please try again.", preferredStyle: .Alert)
+                        let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }
+                        }
+                        alert.addAction(action)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.presentViewController(alert, animated: true){}
+                    }
+                }
             }
-            
-            
-            
-            
         }
         task.resume()
         print("FINISHED U-LOGIN")

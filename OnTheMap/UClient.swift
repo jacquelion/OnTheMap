@@ -98,6 +98,7 @@ class UClient : NSObject {
             func sendError(error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
+                //TODO: Where does Code from?
                 completionHandlerForPOST(result: nil, error: NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
             }
             

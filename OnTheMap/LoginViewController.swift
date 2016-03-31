@@ -111,10 +111,23 @@ class LoginViewController: UIViewController {
                             self.presentViewController(alert, animated: true){}
                     }
                 }
+                //PARSE DATA: UClient.convertDataWithCompletionHandler
+                let parsedResult: AnyObject!
+                do {
+                    parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+                } catch {
+                    print("Could not parse the data as JSON: '\(data)'")
+                    return
+                }
             }
+            
+            /* Use the data! */
+            //TODO: Store Key?
+            
         }
         task.resume()
         print("FINISHED U-LOGIN")
+        
   //      getStudentLocations()
     }
     

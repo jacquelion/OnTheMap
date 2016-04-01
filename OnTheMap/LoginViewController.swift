@@ -140,6 +140,60 @@ class LoginViewController: UIViewController {
         
     }
     
+    private func getStudentLocations() {
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100")!)
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        let session = NSURLSession.sharedSession()
+        
+        print("REQUEST on PARSE: ", request)
+        
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil { // Handle error...
+                return
+            }
+            //TODO: Add guard statements
+            
+            //PARSE DATA: UClient.convertDataWithCompletionHandler
+            let parsedResult: AnyObject!
+            do {
+                parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+            } catch {
+                print("Could not parse the data as JSON: '\(data)'")
+                return
+            }
+            print("Parsed Result: ", parsedResult)
+            
+            guard let results = parsedResult["results"] as? [[String: AnyObject]] else {
+                print("Could not get results")
+                return
+            }
+            
+            guard let users = UUser.usersFromResults(results) as? [UUser] else {
+                print("Error getting users from Results")
+                return
+            }
+            
+            UClient.sharedInstance.users = users
+            self.loadTableViewData()
+            
+        }
+        
+        task.resume()
+        
+    }
+    
+    func loadTableViewData () {
+        performSegueWithIdentifier("SegueLoadMapView", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "SegueLoadMapView" {
+            if let MapViewController = segue.destinationViewController as? MapViewController {
+                MapViewController.users = UClient.sharedInstance.users
+            }
+        }
+    }
     
     
     private func logout() {

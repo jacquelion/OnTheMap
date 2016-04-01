@@ -12,13 +12,14 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    var users = [UUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     
         //TODO: locations should be gotten from the Udacity database
-        getStudentLocations()
+        loadData()
     //    let locations = hardCodedLocationData()
         
         }
@@ -28,45 +29,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    private func getStudentLocations() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100")!)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        let session = NSURLSession.sharedSession()
-        
-        print("REQUEST on PARSE: ", request)
-        
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error...
-                return
-            }
-            //TODO: Add guard statements
-            //print("DATA from PARSE: ", NSString(data: data!, encoding: NSUTF8StringEncoding)!)
-            //print("RESPONSE from PARSE: ", response)
-            
-            //PARSE DATA: UClient.convertDataWithCompletionHandler
-            let parsedResult: AnyObject!
-            do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-            } catch {
-                print("Could not parse the data as JSON: '\(data)'")
-                return
-            }
-            print("Parsed Result: ", parsedResult)
-            //TODO: Store Student locations in dictionary
-            guard let results = parsedResult["results"] as? [[String: AnyObject]] else {
-                print("Could not get results")
-                return
-            }
-            
-            guard let users = UUser.usersFromResults(results) as? [UUser] else {
-                print("Error getting users from Results")
-                return
-            }
-            
-            UClient.sharedInstance.users = users
-            //let users = UClient.sharedInstance.users
-            var annotations = [MKPointAnnotation]()
+    private func loadData() {
+        var annotations = [MKPointAnnotation]()
             
             //TODO: Create CUSTOM Student Location Struct
             for dictionary in users {
@@ -95,9 +59,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 
         }
-        
-        task.resume()
-        
     }
 
     //MARK: -MKMapViewDelegate
@@ -187,6 +148,4 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             ]
         ]
     }
-
-}
 

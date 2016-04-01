@@ -9,22 +9,38 @@
 import UIKit
 
 class ListViewController: UITableViewController {
-    
-    var users : [UUser] = UClient.sharedInstance.users
+    var users : [UUser] = [UUser]()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+    }
+    
+    override func viewWillAppear(animated: Bool){
+        super.viewWillAppear(animated)
+        
+        self.users = UClient.sharedInstance.users
+        performUIUpdatesOnMain { 
+            self.tableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+//MARK: ListTableViewController (UITableViewController)
+
+extension ListViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //TODO: Return number of map data points
-        return 100
+        print(users.count)
+        return users.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -40,7 +56,7 @@ class ListViewController: UITableViewController {
         //TODO: Open user's url in safari view
         let urlVC = self.storyboard!.instantiateViewControllerWithIdentifier("UserURLViewController") as! UserURLViewController
         
-        //urlVC.user = self.users[indexPath.row]
+        urlVC.user = self.users[indexPath.row]
         
         navigationController!.pushViewController(urlVC, animated: true)
     }

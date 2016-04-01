@@ -10,6 +10,6 @@ import Foundation
 import UIKit
 
 class UserURLViewController: UIViewController {
-
+    var user: UUser?
 
 }

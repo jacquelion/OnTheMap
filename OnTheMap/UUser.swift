@@ -19,7 +19,7 @@ struct UUser {
     let mapString: String
     let mediaURL: String
     let objectId: String
-    let uniqueKey: Int //id
+    let uniqueKey: AnyObject //id
     let updatedAt: String
     
 //    let coordinate = CLLocationCoordinate2D(latititude: latitude, longitude: longitude)
@@ -36,7 +36,7 @@ struct UUser {
         mapString = dictionary["mapString"] as! String
         mediaURL = dictionary["mediaURL"] as! String
         objectId = dictionary["objectId"] as! String
-        uniqueKey = dictionary["uniqueKey"] as! Int //id
+        uniqueKey = dictionary["uniqueKey"] as AnyObject! //id
         updatedAt = dictionary["updatedAt"] as! String
     }
     

@@ -102,6 +102,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="8rJ-Kc-sve" id="9cB-9t-8rb"/>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="PWi-XI-bmM"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -116,6 +120,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="tableView" destination="b7z-5m-0M2" id="NLJ-J8-FOw"/>
                         <segue destination="ptX-YZ-LRT" kind="show" id="ogF-cJ-pvy"/>
                     </connections>
                 </viewController>

@@ -77,8 +77,6 @@ class LoginViewController: UIViewController {
                 print("ERROR ON U-LOGIN")
             } else {
             let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
-            print("RESPONSE from U-LOGIN: ", response)
-            print("DATA from U-LOGIN: ", NSString(data: newData, encoding: NSUTF8StringEncoding))
                 
             //TODO: Check for Status Code, and present alert view if not 200
                 guard let statuscode = (response as? NSHTTPURLResponse)?.statusCode else {
@@ -121,7 +119,7 @@ class LoginViewController: UIViewController {
                 }
              
                 /* Use the data! */
-                //TODO: Store Key?
+                //Store User Key
                 
                 guard let account = parsedResult["account"] as? NSDictionary, let userKey = account["key"] as? String else {
                     print("Error getting userKey")
@@ -129,9 +127,10 @@ class LoginViewController: UIViewController {
                 }
                 UClient.sharedInstance.userKey = userKey
                 print(UClient.sharedInstance.userKey)
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.performSegueWithIdentifier("SegueLoadMapView", sender: self)
-                }
+                
+                self.getStudentLocations()
+                
+                
             }
 
         }
@@ -175,6 +174,7 @@ class LoginViewController: UIViewController {
             }
             
             UClient.sharedInstance.users = users
+           
             self.loadTableViewData()
             
         }
@@ -184,7 +184,9 @@ class LoginViewController: UIViewController {
     }
     
     func loadTableViewData () {
-        performSegueWithIdentifier("SegueLoadMapView", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("SegueLoadMapView", sender: self)
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

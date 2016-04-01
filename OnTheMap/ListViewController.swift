@@ -8,9 +8,10 @@
 
 import UIKit
 
-class ListViewController: UITableViewController {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var users : [UUser] = [UUser]()
 
+    @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +38,13 @@ class ListViewController: UITableViewController {
 
 extension ListViewController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //TODO: Return number of map data points
         print(users.count)
         return users.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("UdacityUserCell")!
         
         let user = users[indexPath.row]
@@ -52,7 +53,7 @@ extension ListViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //TODO: Open user's url in safari view
         let urlVC = self.storyboard!.instantiateViewControllerWithIdentifier("UserURLViewController") as! UserURLViewController
         

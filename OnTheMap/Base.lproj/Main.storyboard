@@ -306,7 +306,7 @@
         <!--On the Map-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="49e-Tb-3d3" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="On the Map" id="flK-Mn-ZD4">
                         <barButtonItem key="backBarButtonItem" title="Drop A Pin" id="eFU-ck-BBG">
                             <connections>

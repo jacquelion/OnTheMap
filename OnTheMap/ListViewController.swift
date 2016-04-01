@@ -48,18 +48,33 @@ extension ListViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("UdacityUserCell")!
         
         let user = users[indexPath.row]
-        cell.textLabel!.text = user.firstName
+        cell.textLabel!.text = "\(user.firstName) \(user.lastName): \(user.mediaURL)"
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //TODO: Open user's url in safari view
-        let urlVC = self.storyboard!.instantiateViewControllerWithIdentifier("UserURLViewController") as! UserURLViewController
         
-        urlVC.user = self.users[indexPath.row]
         
-        navigationController!.pushViewController(urlVC, animated: true)
+        self.performSegueWithIdentifier("segueDetail", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+      
+        
+        if segue.identifier == "segueDetail" {
+            //store index of user
+            let selectedIndexPath = self.tableView.indexPathForSelectedRow
+            //deselect row
+            self.tableView.deselectRowAtIndexPath(selectedIndexPath!, animated: true)
+            //pass user data to UserURLViewController
+            let urlVC = self.storyboard!.instantiateViewControllerWithIdentifier("UserURLViewController") as! UserURLViewController
+        
+            urlVC.user = self.users[selectedIndexPath!.row]
+            //instantiate UserURLViewController
+            navigationController!.pushViewController(urlVC, animated: true)
+        }
     }
 
 

@@ -31,7 +31,7 @@
                             <constraint firstAttribute="trailing" secondItem="FdP-Ll-aWy" secondAttribute="trailing" id="t2g-WJ-V90"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" id="esZ-fM-0KP"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" id="esZ-fM-0KP"/>
                     <navigationItem key="navigationItem" id="c3L-Yr-nrr"/>
                     <connections>
                         <outlet property="mapView" destination="FdP-Ll-aWy" id="v6W-wZ-1Sb"/>
@@ -116,7 +116,7 @@
                             <constraint firstItem="b7z-5m-0M2" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="lOQ-sm-uch"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="List" id="z1q-PO-t5p"/>
+                    <tabBarItem key="tabBarItem" title="List" image="list" id="z1q-PO-t5p"/>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -336,6 +336,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="list" width="32" height="32"/>
+        <image name="map" width="32" height="32"/>
         <image name="pin" width="32" height="32"/>
         <image name="udacity" width="256" height="256"/>
     </resources>

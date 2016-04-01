@@ -186,7 +186,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UdacityUserCell" textLabel="Vsa-7J-46H" style="IBUITableViewCellStyleDefault" id="6Lw-lf-XvJ">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Lw-lf-XvJ" id="AvR-ua-Eh2">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -222,7 +222,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="b7z-5m-0M2" id="NLJ-J8-FOw"/>
-                        <segue destination="ptX-YZ-LRT" kind="showDetail" identifier="segueDetail" id="VtE-T4-CTa"/>
+                        <segue destination="ptX-YZ-LRT" kind="show" identifier="segueDetail" action="showDetailViewController:sender:" id="VtE-T4-CTa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -232,7 +232,7 @@
         <!--UserURLViewController-->
         <scene sceneID="832-dc-TZn">
             <objects>
-                <viewController title="UserURLViewController" id="ptX-YZ-LRT" customClass="UserURLViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserURLViewController" title="UserURLViewController" id="ptX-YZ-LRT" customClass="UserURLViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HrV-nn-iB4"/>
                         <viewControllerLayoutGuide type="bottom" id="9mb-Eb-HFV"/>
@@ -355,7 +355,6 @@
                         <outlet property="loginButton" destination="5Jx-BA-V2K" id="Urb-vm-9Qa"/>
                         <outlet property="password" destination="81H-0f-IXw" id="AtO-Md-G8x"/>
                         <outlet property="username" destination="DWv-El-uFO" id="mdp-S2-yBf"/>
-                        <segue destination="dgw-Zf-KA3" kind="showDetail" identifier="SegueLoadMapView" id="qBd-Yz-rDD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zHP-2o-K7x" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -365,6 +364,7 @@
         <!--UAuthViewController-->
         <scene sceneID="CUx-nG-NbV">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uas-DR-w6m" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="jLg-t3-No7" userLabel="UAuthViewController" customClass="UAuthViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XmD-1H-m79"/>
@@ -391,25 +391,8 @@
                         <outlet property="webView" destination="hYK-kn-G2U" id="JJb-Sn-fet"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Uas-DR-w6m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1441" y="684"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="xAg-OM-WRN">
-            <objects>
-                <navigationController id="dgw-Zf-KA3" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oM9-KV-zBw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="49e-Tb-3d3" kind="relationship" relationship="rootViewController" id="ZyP-Fu-ftN"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="E6R-qh-eeM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-760" y="-6"/>
         </scene>
         <!--On the Map-->
         <scene sceneID="yl2-sM-qoP">
@@ -448,7 +431,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="-92" y="0.0"/>
         </scene>
     </scenes>
     <resources>

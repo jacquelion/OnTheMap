@@ -22,6 +22,7 @@ extension UClient {
      Step 3: Get Map Locations
      */
     
+    //TODO: Pass in email and user instead of View Controller
     func authenticateWithViewController(hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: String?) -> Void) {
     
         // chain completion handlers for each request so that they run one after the other

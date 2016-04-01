@@ -185,17 +185,20 @@ class LoginViewController: UIViewController {
     
     func loadTableViewData () {
         dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("SegueLoadMapView", sender: self)
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarViewController") as! TabBarViewController
+            
+            self.presentViewController(vc, animated: true, completion: nil)
+            //self.performSegueWithIdentifier("SegueLoadMapView", sender: self)
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "SegueLoadMapView" {
-            if let MapViewController = segue.destinationViewController as? MapViewController {
-                MapViewController.users = UClient.sharedInstance.users
-            }
-        }
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "SegueLoadMapView" {
+//            if let MapViewController = segue.destinationViewController as? MapViewController {
+//                MapViewController.users = UClient.sharedInstance.users
+//            }
+//        }
+//    }
     
     
     private func logout() {

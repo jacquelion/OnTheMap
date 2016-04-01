@@ -69,11 +69,14 @@ extension ListViewController {
             //deselect row
             self.tableView.deselectRowAtIndexPath(selectedIndexPath!, animated: true)
             //pass user data to UserURLViewController
-            let urlVC = self.storyboard!.instantiateViewControllerWithIdentifier("UserURLViewController") as! UserURLViewController
+            
+            let urlVC = sender?.presentedViewController as! UserURLViewController
+            
+            //let urlVC = self.storyboard!.instantiateViewControllerWithIdentifier("UserURLViewController") as! UserURLViewController
         
             urlVC.user = self.users[selectedIndexPath!.row]
             //instantiate UserURLViewController
-            navigationController!.pushViewController(urlVC, animated: true)
+            //navigationController!.pushViewController(urlVC, animated: true)
         }
     }
 

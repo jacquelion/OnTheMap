@@ -48,7 +48,8 @@ extension ListViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("UdacityUserCell")!
         
         let user = users[indexPath.row]
-        cell.textLabel!.text = "\(user.firstName) \(user.lastName): \(user.mediaURL)"
+        cell.textLabel!.text = "\(user.firstName) \(user.lastName)"
+        cell.detailTextLabel!.text =  "\(user.mediaURL)"
         
         return cell
     }
@@ -70,7 +71,7 @@ extension ListViewController {
             self.tableView.deselectRowAtIndexPath(selectedIndexPath!, animated: true)
             //pass user data to UserURLViewController
             
-            let urlVC = sender?.presentedViewController as! UserURLViewController
+            let urlVC = segue.destinationViewController as! UserURLViewController
             
             //let urlVC = self.storyboard!.instantiateViewControllerWithIdentifier("UserURLViewController") as! UserURLViewController
         

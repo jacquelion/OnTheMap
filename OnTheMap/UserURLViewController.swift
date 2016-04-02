@@ -38,4 +38,9 @@ class UserURLViewController: UIViewController, UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
         self.mySpinner.stopAnimating()
     }
+    
+    
+    @IBAction func Cancel(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

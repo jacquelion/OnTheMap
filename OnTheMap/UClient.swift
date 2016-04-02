@@ -165,12 +165,6 @@ class UClient {
     }
     
     //MARK: Shared Instance - Singleton
-    
     static let sharedInstance = UClient()
-//    class func sharedInstance() -> UClient {
-//        struct Singleton {
-//            static var sharedInstance = UClient()
-//        }
-//        return Singleton.sharedInstance
-//    }
+
 }

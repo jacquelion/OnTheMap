@@ -26,7 +26,8 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
     @IBAction func reload(sender: AnyObject) {
         //TODO: Figure out how to reload - add activity view spinny to list & map view
-        self.viewWillAppear(true)
+        //self.viewWillAppear(true)
+        UClient.sharedInstance.getStudentLocations()
     }
     
     private func logout() {
@@ -50,8 +51,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         }
         dispatch_async(dispatch_get_main_queue()) {
             //TODO: Figure out how to get back to Login Page
-            let loginVC = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController")
-            self.navigationController?.popToViewController(loginVC, animated: true)
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         task.resume()

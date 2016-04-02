@@ -12,12 +12,14 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mySpinner: UIActivityIndicatorView!
+    
     var users = [UUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-    
+        self.mySpinner.startAnimating()
         //TODO: locations should be gotten from the Udacity database
         loadData()
     }
@@ -29,6 +31,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         performUIUpdatesOnMain {
             self.self.loadData()
         }
+    }
+    
+    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
+        self.mySpinner.stopAnimating()
     }
 
     override func didReceiveMemoryWarning() {

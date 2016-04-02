@@ -25,6 +25,8 @@ class UClient {
 //    var sessionID: String? = nil
 //    var userID: Int? = nil
     var userKey: String! = nil
+    var firstName: String! = nil
+    var lastName: String! = nil
     var users: [UUser] = []
     
     //MARK: Initializers

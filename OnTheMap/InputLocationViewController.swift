@@ -24,6 +24,11 @@ class InputLocationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        //clear fields after view disappears
+        address.text = ""
+    }
+    
     @IBAction func FindOnMap(sender: AnyObject) {
         if (address.text == "") {
             let alert = UIAlertController(title: "Empty Fields", message: "Please enter a valid address.", preferredStyle: .Alert)
@@ -38,6 +43,9 @@ class InputLocationViewController: UIViewController {
             vc.location = address.text!
             self.presentViewController(vc, animated: true, completion: nil)
         }
+    }
+    @IBAction func cancel(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
  }
 

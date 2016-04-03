@@ -64,7 +64,7 @@ extension UClient {
             
             UClient.sharedInstance.users = users
             
-        //    self.loadTableViewData()
+            //loadTableViewData()
             
         }
         
@@ -72,6 +72,16 @@ extension UClient {
         
     }
 
+    func loadTableViewData () {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil) //nil bundle defaults to Main
+//        //let viewController = UIViewController(nibName: "", bundle: NSBundle.mainBundle()
+//        dispatch_async(dispatch_get_main_queue()) {
+//            let vc = storyboard.instantiateViewControllerWithIdentifier("NavBarViewController") as! UINavigationController
+//            
+//            storyboard.presentViewController(vc, animated: true, completion: nil)
+//        }
+//    }
+}
 }
     
     //TODO: Pass in email and user instead of View Controller

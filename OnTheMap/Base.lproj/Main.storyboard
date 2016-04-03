@@ -366,7 +366,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Jx-BA-V2K">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Jx-BA-V2K" customClass="BorderedButton" customModule="OnTheMap" customModuleProvider="target">
                                 <rect key="frame" x="178" y="323" width="245" height="30"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
@@ -452,7 +452,6 @@
         <!--UAuthViewController-->
         <scene sceneID="CUx-nG-NbV">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Uas-DR-w6m" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="jLg-t3-No7" userLabel="UAuthViewController" customClass="UAuthViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XmD-1H-m79"/>
@@ -479,6 +478,7 @@
                         <outlet property="webView" destination="hYK-kn-G2U" id="JJb-Sn-fet"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uas-DR-w6m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1441" y="684"/>
         </scene>

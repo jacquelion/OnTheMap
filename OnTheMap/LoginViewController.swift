@@ -15,7 +15,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var debugTextLabel: UILabel!
-    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var loginButton: BorderedButton!
    
     @IBAction func loginButton(sender: AnyObject) {
         
@@ -132,11 +132,8 @@ class LoginViewController: UIViewController {
     
     private func getStudentLocations() {
         UClient.sharedInstance.getStudentLocations()
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.loadTableViewData()
-        }
-        
+        loadTableViewData()
+              
     }
     
     func loadTableViewData () {

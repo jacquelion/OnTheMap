@@ -16,17 +16,24 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        self.users = UClient.sharedInstance.users
+ 
     }
     
     override func viewWillAppear(animated: Bool){
         super.viewWillAppear(animated)
-        
-        self.users = UClient.sharedInstance.users
-        performUIUpdatesOnMain { 
-            self.tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue()) {
+            performUIUpdatesOnMain {
+                self.tableView.reloadData()
+            }
         }
+       
+
     }
+    
+    override func viewDidAppear(animated: Bool) {
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

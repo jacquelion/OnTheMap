@@ -15,6 +15,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var debugTextLabel: UILabel!
+    
+    @IBOutlet weak var accountSignupButton: UIButton!
     @IBOutlet weak var loginButton: BorderedButton!
    
     @IBAction func loginButton(sender: AnyObject) {
@@ -51,6 +53,11 @@ class LoginViewController: UIViewController {
         password.text = ""
     }
     
+    @IBAction func accountSignup(sender: AnyObject) {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("UAuthViewController")
+        self.presentViewController(vc!, animated: true, completion: nil)
+    }
+    
     private func login () {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
         request.HTTPMethod = "POST"
@@ -84,6 +91,26 @@ class LoginViewController: UIViewController {
                     print("great status.")
                 case 403:
                     let alert = UIAlertController(title: "Account not found", message: "Account not found or invalid credentials. Please ensure you have registered with Udacity and entered the correct username/password combination.", preferredStyle: .Alert)
+                    let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }                         }
+                    alert.addAction(action)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.presentViewController(alert, animated: true){}
+                    }
+                case 400:
+                    let alert = UIAlertController(title: "Bad Request", message: "There is a problem with the request.", preferredStyle: .Alert)
+                    let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }                         }
+                    alert.addAction(action)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.presentViewController(alert, animated: true){}
+                    }
+                case 500...599:
+                    let alert = UIAlertController(title: "Internal Server Error", message: "The server encountered an unexpected condition which prevented it from fulfilling the request. Please try again a little later.", preferredStyle: .Alert)
                     let action = UIAlertAction(title: "OK", style: .Default) { _ in
                         dispatch_async(dispatch_get_main_queue()) {
                             self.dismissViewControllerAnimated(true, completion: nil)

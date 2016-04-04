@@ -18,6 +18,7 @@ class UAuthViewController: UIViewController {
     var requestToken: String? = nil
     var completionHandlerForView: ((success: Bool, errorString: String?) -> Void)? = nil
     
+    @IBOutlet weak var NavigationItem: UINavigationItem!
     //MARK: Outlets
     
     @IBOutlet weak var webView: UIWebView!
@@ -29,8 +30,12 @@ class UAuthViewController: UIViewController {
         
         webView.delegate = self
         
-        navigationItem.title = "Udacity Auth"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelAuth")
+        let url = NSURL(string: "https://www.udacity.com/account/auth#!/signin")
+        let requestObj = NSURLRequest(URL: url!)
+        webView.loadRequest(requestObj)
+        
+        NavigationItem.title = "Udacity Auth"
+        NavigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(UAuthViewController.cancelAuth))
     }
     
     override func viewWillAppear(animated: Bool) {

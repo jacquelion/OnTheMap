@@ -25,9 +25,9 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     @IBAction func reload(sender: AnyObject) {
-        //TODO: Figure out how to reload - add activity view spinny to list & map view
+        //TODO: separate functions into: get&present vs just get
         //self.viewWillAppear(true)
-        UClient.sharedInstance.getStudentLocations()
+//        UClient.sharedInstance.getStudentLocations(self)
     }
     
     private func logout() {

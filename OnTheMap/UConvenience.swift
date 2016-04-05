@@ -22,13 +22,28 @@ extension UClient {
      Step 3: Get Map Locations
      */
 
-    func loginUdacity() {
-        
-    
-    
+    func login() {
+       
     }
     
-    func getStudentLocations() {
+    func getMapLocations(completionHandlerForLocations: (success: Bool, users: [UUser], errorString: String?) -> Void) {
+        let parameters = [ParameterKeys.ParseAppId:  Constants.ParseApplicationID, ParameterKeys.ParseAPIKey : Constants.ParseApiKey]
+        taskForGETMethod(Methods.StudentLocation, parameters: parameters) {(results, error) in
+            if let error = error {
+                print(error)
+                completionHandlerForLocations(success: false, users: [], errorString: "Login Failed (Session ID).")
+            } else {
+                if let users = UUser.usersFromResults(results as! [[String : AnyObject]]) as? [UUser]{
+                    completionHandlerForLocations(success: true, users: users, errorString: nil)
+                } else {
+                    print("Could not find \(UClient.JSONResponseKeys.User) in \(results)")
+                    completionHandlerForLocations(success: false, users: [], errorString: "Login Failed (Session ID).")
+                }
+            }
+        }
+    }
+    
+    func getStudentLocations(vc: UIViewController) {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100")!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -64,7 +79,7 @@ extension UClient {
             
             UClient.sharedInstance.users = users
             
-            //loadTableViewData()
+            self.loadTableViewData(vc)
             
         }
         
@@ -72,89 +87,17 @@ extension UClient {
         
     }
 
-    func loadTableViewData () {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil) //nil bundle defaults to Main
-//        //let viewController = UIViewController(nibName: "", bundle: NSBundle.mainBundle()
-//        dispatch_async(dispatch_get_main_queue()) {
-//            let vc = storyboard.instantiateViewControllerWithIdentifier("NavBarViewController") as! UINavigationController
-//            
-//            storyboard.presentViewController(vc, animated: true, completion: nil)
-//        }
-//    }
+    func loadTableViewData (vc: UIViewController) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil) //nil bundle defaults to Main
+        //let viewController = UIViewController(nibName: "LoginViewController", bundle: NSBundle.mainBundle())
+        dispatch_async(dispatch_get_main_queue()) {
+            let navController = storyboard.instantiateViewControllerWithIdentifier("NavBarViewController") as! UINavigationController
+            //let loginVC = storyboard.instantiateInitialViewController()
+            vc.presentViewController(navController, animated: true, completion: nil)
+        }
+    }
 }
-}
+
     
-    //TODO: Pass in email and user instead of View Controller
-//    func authenticateWithViewController(hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: String?) -> Void) {
-//    
-//        // chain completion handlers for each request so that they run one after the other
-//        login() { (success, userKey, errorString) in
-//            if success {
-//                //Store key
-//                self.userKey = userKey
-//                print("SUCCESS logging in, getting userKey: ", userKey)
-//                
-//                self.getUserInfo(){ (success, errorString) in
-//                    
-//                    if success {
-//                    //Store User Info (i.e. Name)
-//                        
-//                        self.getMapLocations() {(success, errorString) in
-//                            
-//                            if success {
-//                                //store locations as points on map
-//                            }
-//                            completionHandlerForAuth(success: success, errorString: errorString)
-//                        
-//                        }
-//                    
-//                    } else {
-//                        completionHandlerForAuth(success: success, errorString: errorString)
-//                    }
-//                
-//                }
-//                
-//            } else {
-//                completionHandlerForAuth(success: success, errorString: errorString)
-//            }
-//        
-//        }
-//    }
-//    
-//        
-//
-//
-//    private func login(completionHandlerForULogin: (success: Bool, userKey: String?, errorString: String?) -> Void) {
-//        
-//        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
-//        let parameters = [String: AnyObject]()
-//        let jsonBody = "{\(UClient.JSONBodyKeys.udacity): {\(UClient.JSONBodyKeys.username): \"jacqueline.sloves@gmail.com\", \(UClient.JSONBodyKeys.password): \"darkstar\"}}"
-//        
-//        /* 2. Make the request */
-//        taskForPOSTMethod(Methods.Session, parameters: parameters, jsonBody: jsonBody) { (results, error) in
-//
-//            /* 3. Send the desired value(s) to completion handler */
-//            if let error = error {
-//                print(error)
-//                completionHandlerForULogin(success: false, userKey: nil, errorString: "Login Failed (User Key).")
-//            } else {
-//                if let userKey = results[UClient.JSONResponseKeys.Session] as? String {
-//                    completionHandlerForULogin(success: true, userKey: userKey, errorString: nil)
-//                } else {
-//                    print("Could not find \(UClient.JSONResponseKeys.Session) in \(results)")
-//                    completionHandlerForULogin(success: false, userKey: nil, errorString: "Login Failed (User Key).")
-//                }
-//            }
-//        }
-//    }
-//    
-//    private func getUserInfo(completionHandlerForUserInfo: (success: Bool, errorString: String?) -> Void){
-//    
-//    }
-//    
-//    private func getMapLocations(completionHandlerForMapLocations: (success: Bool, errorString: String?) -> Void){
-//    
-//    }
-//    
-//    
-//}
+ 

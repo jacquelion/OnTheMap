@@ -110,7 +110,7 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate {
         }
         
         guard let mapString = location as? String else {
-            print("error with locaiton")
+            print("error with location")
             return
         }
         

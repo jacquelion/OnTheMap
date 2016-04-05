@@ -19,7 +19,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.mySpinner.startAnimating()
+        //self.mySpinner.startAnimating()
         //TODO: locations should be gotten from the Udacity database
         loadData()
     }
@@ -33,9 +33,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
-        self.mySpinner.stopAnimating()
+    func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
+       // self.mySpinner.stopAnimating()
     }
+//    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
+//        self.mySpinner.stopAnimating()
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -43,6 +46,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func loadData() {
+        
         var annotations = [MKPointAnnotation]()
             
             //TODO: Create CUSTOM Student Location Struct
@@ -84,19 +88,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinTintColor = UIColor.redColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIButton
         } else {
+            let button = UIButton(type: .DetailDisclosure) as UIButton // button with info sign in it
+            pinView!.rightCalloutAccessoryView = button
+
             pinView!.annotation = annotation
+
         }
         
         return pinView
     }
     
     //Respond to taps
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
+            print("TAPPED! URL toOPEN: \(view.annotation?.subtitle)")
             let app = UIApplication.sharedApplication()
             if let toOpen = view.annotation?.subtitle! {
+                print("OPENING URL: ")
                 app.openURL(NSURL(string: toOpen)!)
             }
         }

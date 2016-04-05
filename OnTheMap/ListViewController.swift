@@ -17,6 +17,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.users = UClient.sharedInstance.users
+        self.tableView.reloadData()
  
     }
     
@@ -27,8 +28,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.tableView.reloadData()
             }
         }
-       
-
     }
     
     override func viewDidAppear(animated: Bool) {

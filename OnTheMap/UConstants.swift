@@ -42,6 +42,8 @@ extension UClient {
         //MARK: User Data
         static let Users = "/users"
         
+        static let StudentLocation = "/StudentLocation"
+        
         //POST (Create) a Session:
         //"https://www.udacity.com/api/session"
         
@@ -50,6 +52,9 @@ extension UClient {
         
         //GET Public User Data
         //"https://www.udacity.com/api/users/<user_id>"
+        
+        //GET Student Locations
+        //
     
     }
     
@@ -60,7 +65,9 @@ extension UClient {
     
     //MARK: Parameter Keys
     struct ParameterKeys {
-    
+        static let ParseAppId = "X-Parse-Application-Id"
+        static let ParseAPIKey = "X-Parse-REST-API-Key"
+        static let limit = "limit"
     }
     
     //MARK: JSON Body Keys

@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var debugTextLabel: UILabel!
     
+    @IBOutlet weak var mySpinner: UIActivityIndicatorView!
     @IBOutlet weak var accountSignupButton: UIButton!
     @IBOutlet weak var loginButton: BorderedButton!
    
@@ -40,11 +41,16 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Adjust spinner visibility (have it animate so that when it is called there is no lag
+        mySpinner.startAnimating()
+        mySpinner.hidden = true
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewWillAppear(animated)
         debugTextLabel.text = ""
+        
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -70,11 +76,13 @@ class LoginViewController: UIViewController {
         }
         
         let s = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
-        print("Request.HTTPBody String: ", s)
         
         request.HTTPBody = s.dataUsingEncoding(NSUTF8StringEncoding)
         let session = NSURLSession.sharedSession()
+        mySpinner.hidden = false
         let task = session.dataTaskWithRequest(request) { data, response, error in
+            self.mySpinner.stopAnimating()
+
             if error != nil { // Handle error…
                 print("ERROR ON U-LOGIN")
             } else {
@@ -149,7 +157,9 @@ class LoginViewController: UIViewController {
                 UClient.sharedInstance.userKey = userKey
                 
                 //Chain Login via Udacity API with Getting Student Location Info from Parse API
-                self.getStudentLocations()
+                UClient.sharedInstance.getStudentLocations(self)
+                //UClient.sharedInstance.getMapLocations()
+                
             }
             
         }
@@ -157,11 +167,11 @@ class LoginViewController: UIViewController {
 
     }
     
-    private func getStudentLocations() {
-        UClient.sharedInstance.getStudentLocations()
-        loadTableViewData()
-              
-    }
+//    private func getStudentLocations() {
+//        UClient.sharedInstance.getStudentLocations(self)
+//        loadTableViewData()
+//              
+//    }
     
     func loadTableViewData () {
         dispatch_async(dispatch_get_main_queue()) {

@@ -131,9 +131,20 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate, UITextFieldD
     }
     
     @IBAction func addUserData(sender: AnyObject) {
+        
         guard let url = mediaURL.text! as? String else {
             print("error on mediuURL text")
             return
+        }
+        
+        if url == "" || url == "https://" {
+            let alert = UIAlertController(title: "Empty Fields", message: "Please enter a valid url.", preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                //stop login if there are empty fields
+                return
+            }
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true){}
         }
         
         guard let mapString = location as? String else {

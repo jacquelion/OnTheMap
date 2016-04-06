@@ -183,8 +183,7 @@ extension UClient {
                 return
             }
             
-            UClient.sharedInstance.users = users
-            //UUser.users = users
+            UserDictionay.sharedInstance.users = users
             
             self.loadTableViewData(vc)
             

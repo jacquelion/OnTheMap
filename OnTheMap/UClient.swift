@@ -21,7 +21,6 @@ class UClient {
     var userKey: String! = nil
     var firstName: String! = nil
     var lastName: String! = nil
-    var users: [UUser] = []
     
     //MARK: Initializers
     

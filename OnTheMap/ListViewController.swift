@@ -9,14 +9,14 @@
 import UIKit
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var users : [UUser] = [UUser]()
+    var users = [UUser]()
 
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.users = UClient.sharedInstance.users
+        self.users = UserDictionay.sharedInstance.users
         self.tableView.reloadData()
  
     }

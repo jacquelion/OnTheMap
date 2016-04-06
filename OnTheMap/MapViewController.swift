@@ -27,7 +27,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(animated: Bool){
         super.viewWillAppear(animated)
         
-        self.users = UClient.sharedInstance.users
+        self.users = UserDictionay.sharedInstance.users
+        
         performUIUpdatesOnMain {
             self.self.loadData()
         }

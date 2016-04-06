@@ -9,7 +9,7 @@
 //MARK: - UdacityUser
 
 struct UUser {
-
+    
     //MARK: Properties
     let createdAt: String
     let firstName: String
@@ -21,8 +21,6 @@ struct UUser {
     let objectId: String
     let uniqueKey: AnyObject //id
     let updatedAt: String
-    var users: [UUser] = []
-
     
 //    let coordinate = CLLocationCoordinate2D(latititude: latitude, longitude: longitude)
     

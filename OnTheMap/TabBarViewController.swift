@@ -29,7 +29,21 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 //        let mapVC = self.storyboard!.instantiateViewControllerWithIdentifier("MapViewController")
 //        let listVC = self.storyboard!.instantiateInitialViewController("ListViewController")
 //        self.navigationController!.pushViewController(MapViewController, animated: true)
-        UClient.sharedInstance.getStudentLocations(self)
+        
+        if Reachability.isConnectedToNetwork() == true {
+            UClient.sharedInstance.getStudentLocations(self)
+            print("Internet connection OK")
+        } else {
+            print("Internet connection FAILED")
+            let alert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                return
+            }
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true){}
+            
+        }
+
     }
     
 }

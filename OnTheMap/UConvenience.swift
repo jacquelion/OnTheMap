@@ -151,7 +151,8 @@ extension UClient {
     }
 
     func getStudentLocations(vc: UIViewController) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100")!)
+        //parameters include: Limit response to 100, and order ascending by updatedAt
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100&order=-updatedAt")!)
         request.addValue(Constants.ParseApplicationID, forHTTPHeaderField: ParameterKeys.ParseAppId)
         request.addValue(Constants.ParseApiKey, forHTTPHeaderField: ParameterKeys.ParseAPIKey)
         let session = NSURLSession.sharedSession()
@@ -183,7 +184,7 @@ extension UClient {
             }
             
             UClient.sharedInstance.users = users
-            
+            //UUser.users = users
             
             self.loadTableViewData(vc)
             

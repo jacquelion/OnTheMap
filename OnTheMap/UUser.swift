@@ -21,6 +21,8 @@ struct UUser {
     let objectId: String
     let uniqueKey: AnyObject //id
     let updatedAt: String
+    var users: [UUser] = []
+
     
 //    let coordinate = CLLocationCoordinate2D(latititude: latitude, longitude: longitude)
     
@@ -51,4 +53,5 @@ struct UUser {
         return users
     }
 
+    
 }

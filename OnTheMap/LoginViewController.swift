@@ -37,7 +37,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             mySpinner.hidden = false
             loginButton.enabled = false
-            UClient.sharedInstance.login(username, password: password, vc: self)
+            
+            if Reachability.isConnectedToNetwork() == true {
+                UClient.sharedInstance.login(username, password: password, vc: self)
+                mySpinner.hidden = true
+                loginButton.enabled = true
+                print("Internet connection OK")
+            } else {
+                mySpinner.hidden = true
+                loginButton.enabled = true
+                print("Internet connection FAILED")
+                let alert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: .Alert)
+                let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                    return
+                }
+                alert.addAction(action)
+                self.presentViewController(alert, animated: true){}
+
+            }
         }
     }
     

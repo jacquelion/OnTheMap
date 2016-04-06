@@ -11,7 +11,7 @@ import UIKit
 import MapKit
 
 class InputLinkViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
-
+    
     @IBOutlet weak var myMapView: MKMapView!
     @IBOutlet weak var mediaURL: UITextField!
     @IBOutlet weak var mySpinner: UIActivityIndicatorView!
@@ -19,7 +19,7 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate, UITextFieldD
     var location : String!
     var latitude : Double!
     var longitude : Double!
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +33,27 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate, UITextFieldD
         geocoder.geocodeAddressString(location, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
                 print("Error", error)
-            }
-            if let placemark = placemarks![0] as? CLPlacemark {
+                self.mySpinner.hidden = true
+                let alert = UIAlertController(title: "Geocoder Failed", message: "Please enter a city and state, (i.e. Cupertino, CA).", preferredStyle: .Alert)
+                let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    return
+                }
+                alert.addAction(action)
+                self.presentViewController(alert, animated: true){}
+                
+            } else {
+                
+                
+                guard let placemark = placemarks![0] as? CLPlacemark else {
+                    let alert = UIAlertController(title: "Geocoder Failed", message: "Please enter a city and state, (i.e. Cupertino, CA).", preferredStyle: .Alert)
+                    let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        return
+                    }
+                    alert.addAction(action)
+                    self.presentViewController(alert, animated: true){}
+                }
                 
                 var region: MKCoordinateRegion = self.myMapView.region
                 region.center.latitude = (placemark.location?.coordinate.latitude)!
@@ -106,7 +125,7 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate, UITextFieldD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @IBAction func cancel(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -121,7 +140,22 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate, UITextFieldD
             print("error with location")
             return
         }
-        UClient.sharedInstance.postLink(url, mapString: mapString, latitude: latitude, longitude: longitude, vc: self)
+        
+        if Reachability.isConnectedToNetwork() == true {
+            UClient.sharedInstance.postLink(url, mapString: mapString, latitude: latitude, longitude: longitude, vc: self)
+            print("Internet connection OK")
+        } else {
+            mySpinner.hidden = true
+            print("Internet connection FAILED")
+            let alert = UIAlertController(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                return
+            }
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true){}
+            
+        }
+        
         mySpinner.hidden = false
     }
 }

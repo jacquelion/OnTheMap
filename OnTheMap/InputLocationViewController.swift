@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-class InputLocationViewController: UIViewController {
+class InputLocationViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var address: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        address.delegate = self
      }
     
     override func didReceiveMemoryWarning() {
@@ -24,10 +24,62 @@ class InputLocationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        subscribeToKeyboardNotifications()
+    }
+    
     override func viewDidDisappear(animated: Bool) {
         //clear fields after view disappears
         address.text = ""
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeToKeyboardNotifications()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        address.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        //Insert Code re Editing
+        address.backgroundColor = UIColor.blueColor()
+        
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        //Insert Code after Text Field is Done editing
+        address.resignFirstResponder()
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if address.isFirstResponder() {
+            view.frame.origin.y = 0
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo!
+        let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
+    }
+
     
     @IBAction func FindOnMap(sender: AnyObject) {
         if (address.text == "") {

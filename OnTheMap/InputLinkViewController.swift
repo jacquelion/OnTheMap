@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 import MapKit
 
-class InputLinkViewController: UIViewController, MKMapViewDelegate {
+class InputLinkViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var myMapView: MKMapView!
     @IBOutlet weak var mediaURL: UITextField!
+    @IBOutlet weak var mySpinner: UIActivityIndicatorView!
+    
     var location : String!
     var latitude : Double!
     var longitude : Double!
@@ -22,6 +24,11 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        mediaURL.delegate = self
+        mySpinner.startAnimating()
+        
+        UClient.sharedInstance.getUserData()
+        
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(location, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
@@ -42,6 +49,8 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate {
                 //get Longitude/Latitude coordinates from placemark location
                 self.longitude = (placemark.location?.coordinate.longitude)!
                 self.latitude = (placemark.location?.coordinate.latitude)!
+                
+                self.mySpinner.hidden = true
             }
         })
     }
@@ -49,6 +58,48 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate {
     override func viewDidDisappear(animated: Bool) {
         //clear fields after view disappears
         mediaURL.text = ""
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeToKeyboardNotifications()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        mediaURL.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        //Insert Code re Editing
+        mediaURL.text = "https://"
+        
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(InputLinkViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if mediaURL.isFirstResponder() {
+            view.frame.origin.y -= getKeyboardHeight(notification)
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo!
+        let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
     }
     
     override func didReceiveMemoryWarning() {
@@ -61,49 +112,6 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func addUserData(sender: AnyObject) {
-       getUserData()
-    }
-    
-    private func getUserData() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(UClient.sharedInstance.userKey)")!)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error...
-                return
-            }
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
-            
-            //PARSE Data:
-            let parsedResult: AnyObject!
-            do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
-            } catch {
-                print("Could not parse the data as JSON: '\(newData)'")
-                return
-            }
-            
-            guard let user = parsedResult["user"] as? NSDictionary, let firstName = user["first_name"] as? String, let lastName = user["last_name"] as? String else {
-                print("Problem with getting usser data for Parsed Result: \(parsedResult)")
-                return
-            }
-            
-            print("User: ", user, ", firstName: ", firstName, ", lastName: ", lastName)
-            UClient.sharedInstance.firstName = firstName
-            UClient.sharedInstance.lastName = lastName
-            
-            self.postLink()
-        }
-        task.resume()
-    }
-    
-    private func postLink() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-        request.HTTPMethod = "POST"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
         guard let url = mediaURL.text! as? String else {
             print("error on mediuURL text")
             return
@@ -113,22 +121,7 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate {
             print("error with location")
             return
         }
-        
-        let s = "{\"uniqueKey\": \"\(UClient.sharedInstance.userKey)\", \"firstName\": \"\(UClient.sharedInstance.firstName)\", \"lastName\": \"\(UClient.sharedInstance.lastName)\", \"mapString\": \"\(mapString)\", \"mediaURL\": \"\(url)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}"
-        print(s)
-        request.HTTPBody = s.dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error…
-                return
-            }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            dispatch_async(dispatch_get_main_queue()){
-                self.dismissViewControllerAnimated(true, completion: nil)
-
-            }
-        }
-        task.resume()
-        
+        UClient.sharedInstance.postLink(url, mapString: mapString, latitude: latitude, longitude: longitude, vc: self)
+        mySpinner.hidden = false
     }
 }

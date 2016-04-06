@@ -63,8 +63,17 @@ extension ListViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //TODO: Open user's url in safari view
         
+        let selectedIndexPath = self.tableView.indexPathForSelectedRow
+        let selectedUserURL = self.users[selectedIndexPath!.row].mediaURL
         
-        self.performSegueWithIdentifier("segueDetail", sender: self)
+        let app = UIApplication.sharedApplication()
+        if let toOpen = selectedUserURL as? String {
+            print("OPENING URL: ")
+            app.openURL(NSURL(string: toOpen)!)
+        }
+
+        
+        //self.performSegueWithIdentifier("segueDetail", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

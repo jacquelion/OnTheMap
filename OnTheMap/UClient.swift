@@ -17,13 +17,7 @@ class UClient {
     //shared session
     var session = NSURLSession.sharedSession()
     
-    //configuration object
-    //var config = UConfig()
-    
     //authentication state
-//    var requestToken: String? = nil
-//    var sessionID: String? = nil
-//    var userID: Int? = nil
     var userKey: String! = nil
     var firstName: String! = nil
     var lastName: String! = nil
@@ -34,7 +28,7 @@ class UClient {
     private init() {
     }
     
-    //TODO: FILL THESE OUT
+    //TODO: Implement these methods:
     //MARK: GET
     func taskForGETMethod(method: String, parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
             /* 1. Set the parameters */
@@ -122,8 +116,10 @@ class UClient {
                 return
             }
             
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+            
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
         /* 7. Start the request */
@@ -162,8 +158,9 @@ class UClient {
             let queryItem = NSURLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
         }
-        
+        print("UdacityURLFromParameters: ", components.URL)
         return components.URL!
+
     }
     
     //MARK: Shared Instance - Singleton

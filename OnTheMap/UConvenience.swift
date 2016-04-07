@@ -174,6 +174,17 @@ extension UClient {
             print("Parsed Result: ", parsedResult)
             
             guard let results = parsedResult["results"] as? [[String: AnyObject]] else {
+                //Handle Server-side errors
+                let alert = UIAlertController(title: "Server-Side Error", message: "There is a problem with the server. Please try again later.", preferredStyle: .Alert)
+                let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        vc.dismissViewControllerAnimated(true, completion: nil)
+                    }                         }
+                alert.addAction(action)
+                dispatch_async(dispatch_get_main_queue()) {
+                    vc.presentViewController(alert, animated: true){}
+                }
+
                 print("Could not get results")
                 return
             }

@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
-
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mySpinner: UIActivityIndicatorView!
     
@@ -38,12 +38,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.mySpinner.stopAnimating()
         self.mySpinner.hidden = true
     }
-
-//    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
-//        self.mySpinner.stopAnimating()
-//        self.mySpinner.hidden = true
-//    }
-
+    
+    //    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
+    //        self.mySpinner.stopAnimating()
+    //        self.mySpinner.hidden = true
+    //    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -52,31 +52,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     private func loadData() {
         
         var annotations = [MKPointAnnotation]()
+        
+        //TODO: Create CUSTOM Student Location Struct
+        for dictionary in users {
+            let lat = CLLocationDegrees(dictionary.latitude )
+            let long = CLLocationDegrees(dictionary.longitude )
             
-            //TODO: Create CUSTOM Student Location Struct
-            for dictionary in users {
-                let lat = CLLocationDegrees(dictionary.latitude )
-                let long = CLLocationDegrees(dictionary.longitude )
-                
-                //use lat & long to create a CLLocationCoordinates2D instance.
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                
-                let first = dictionary.firstName
-                let last = dictionary.lastName
-                let mediaURL = dictionary.mediaURL
-                
-                
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = "\(first) \(last)"
-                annotation.subtitle = mediaURL
-                
-                annotations.append(annotation)
-            }
+            //use lat & long to create a CLLocationCoordinates2D instance.
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
             
-            // Add annotations to the map
-            self.mapView.addAnnotations(annotations)
+            let first = dictionary.firstName
+            let last = dictionary.lastName
+            let mediaURL = dictionary.mediaURL
+            
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(first) \(last)"
+            annotation.subtitle = mediaURL
+            
+            annotations.append(annotation)
         }
+        
+        // Add annotations to the map
+        self.mapView.addAnnotations(annotations)
+    }
     
     //MARK: -MKMapViewDelegate
     
@@ -107,10 +107,26 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView {
             print("TAPPED! URL toOPEN: \(view.annotation?.subtitle)")
             let app = UIApplication.sharedApplication()
-            if let toOpen = view.annotation?.subtitle! {
+            
+            guard let toOpen = view.annotation?.subtitle! else{
+                print("Error on toOpen")
+                return
+            }
+            
+            if UIApplication.sharedApplication().canOpenURL(NSURL(string: toOpen)!) {
                 print("OPENING URL: ")
                 app.openURL(NSURL(string: toOpen)!)
+            } else {
+                let alert = UIAlertController(title: "Invalid URL", message: "This is not a valid URL. Please select a different link to open.", preferredStyle: .Alert)
+                let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                    return
+                }
+                alert.addAction(action)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(alert, animated: true){}
+                }
             }
+            
         }
     }
 }

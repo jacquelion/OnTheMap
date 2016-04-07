@@ -67,13 +67,25 @@ extension ListViewController {
         let selectedUserURL = self.users[selectedIndexPath!.row].mediaURL
         
         let app = UIApplication.sharedApplication()
-        if let toOpen = selectedUserURL as? String {
+        
+        guard let toOpen = selectedUserURL as? String else{
+            print("Error on toOpen")
+            return
+        }
+        
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: toOpen)!) {
             print("OPENING URL: ")
             app.openURL(NSURL(string: toOpen)!)
+        } else {
+            let alert = UIAlertController(title: "Invalid URL", message: "This is not a valid URL. Please select a different link to open.", preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                return
+            }
+            alert.addAction(action)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.presentViewController(alert, animated: true){}
+            }
         }
-
-        
-        //self.performSegueWithIdentifier("segueDetail", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

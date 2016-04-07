@@ -118,7 +118,7 @@ extension UClient {
         
     }
     
-    func getUserData() {
+    func getUserData(vc: UIViewController) {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(UClient.sharedInstance.userKey)")!)
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
@@ -138,6 +138,15 @@ extension UClient {
             }
             
             guard let user = parsedResult["user"] as? NSDictionary, let firstName = user["first_name"] as? String, let lastName = user["last_name"] as? String else {
+                let alert = UIAlertController(title: "Server-Side Error", message: "There is a problem with the server. Please try again later.", preferredStyle: .Alert)
+                let action = UIAlertAction(title: "OK", style: .Default) { _ in
+                        return
+                }
+                alert.addAction(action)
+                dispatch_async(dispatch_get_main_queue()) {
+                    vc.presentViewController(alert, animated: true){}
+                }
+                
                 print("Problem with getting usser data for Parsed Result: \(parsedResult)")
                 return
             }
@@ -185,7 +194,7 @@ extension UClient {
                     vc.presentViewController(alert, animated: true){}
                 }
 
-                print("Could not get results")
+                print("Could not get results from parsed Data.")
                 return
             }
             

@@ -27,7 +27,7 @@ class InputLinkViewController: UIViewController, MKMapViewDelegate, UITextFieldD
         mediaURL.delegate = self
         mySpinner.startAnimating()
         
-        UClient.sharedInstance.getUserData()
+        UClient.sharedInstance.getUserData(self)
         
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(location, completionHandler: {(placemarks, error) -> Void in

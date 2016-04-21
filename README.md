@@ -78,4 +78,5 @@ Jacqueline Sloves
 
 ## Contact
 e-mail: coderjac@gmail.com
-linkedin: linkedin.com/in/jacquelinesloves
+
+linkedin: https://www.linkedin.com/in/jacquelinesloves
